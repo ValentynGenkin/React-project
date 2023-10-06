@@ -7,7 +7,19 @@ export function useSelectFavorite() {
 }
 
 export function SelectFavoriteProvider({ children }) {
-  const [favorite, setFavorite] = useState([]);
+  let favoriteId = [];
+
+  if (localStorage.length === 0) {
+    favoriteId = [];
+  } else {
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      const value = localStorage.getItem(key);
+      favoriteId.push(parseInt(value));
+    }
+  }
+
+  const [favorite, setFavorite] = useState(favoriteId);
 
   return (
     <SelectFavorite.Provider value={{ favorite, setFavorite }}>

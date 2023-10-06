@@ -60,7 +60,7 @@ function Navigation() {
               ))}
             </NavDropdown>
 
-            <Nav.Link as={Link} to="/" style={{ whiteSpace: 'nowrap' }}>
+            <Nav.Link as={Link} to="/favorite" style={{ whiteSpace: 'nowrap' }}>
               {'Favorite '}
               <Badge bg="success" className="m-1">
                 {favorite.length}

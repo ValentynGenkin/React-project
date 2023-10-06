@@ -1,36 +1,35 @@
-import { Container } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
-import Card from 'react-bootstrap/Card';
-import useFetch from '../Hooks/useFetch';
-import LoadingSpinner from './LoadingSpinner';
-import Title from './Title';
-import PaginationComponent from './Pagination';
-import { useState } from 'react';
-import FavoriteButton from './FavoriteButton';
 import { useSelectFavorite } from '../Context/FavoriteRecipe';
+import useFetch from '../Hooks/useFetch';
+import { useState } from 'react';
+import { Container } from 'react-bootstrap';
+import Title from './Title';
+import Card from 'react-bootstrap/Card';
+import PaginationComponent from './Pagination';
+import LoadingSpinner from './LoadingSpinner';
+import FavoriteButton from './FavoriteButton';
 
-function RecipeList() {
-  const { meal_type, category } = useParams();
+function FavoriteRecipesList() {
+  const { favorite, setFavorite } = useSelectFavorite();
+  // const [offset, setOffset] = useState(0);
 
-  const [offset, setOffset] = useState(0);
-  const url = `https://api.spoonacular.com/recipes/complexSearch?number=20&offset=${offset}&${category}=${meal_type}`;
+  const idList = favorite.join(',');
+
+  console.log(idList);
+  const url = `https://api.spoonacular.com/recipes/informationBulk?ids=${idList}&includeNutrition=false`;
 
   const [data, error] = useFetch(url);
-  const { favorite, setFavorite } = useSelectFavorite();
 
   const saveFavorite = (id) => {
     if (!favorite.includes(id)) {
       setFavorite([...favorite, id]);
-      localStorage.setItem(id, id);
     } else {
       setFavorite([...favorite.filter((filteredItem) => filteredItem !== id)]);
-      localStorage.removeItem(id, id);
     }
   };
 
   return (
     <Container>
-      <Title text={meal_type} />
+      <Title text={'Favorite recipes'} />
 
       <Container
         style={{
@@ -40,7 +39,7 @@ function RecipeList() {
         }}
       >
         {data ? (
-          data.results.map((meal) => (
+          data.map((meal) => (
             <Card key={meal.id} style={{ width: '14rem', margin: '10px' }}>
               <Card.Img variant="top" src={meal.image} />
               <Card.Body
@@ -65,7 +64,7 @@ function RecipeList() {
           <LoadingSpinner />
         )}
       </Container>
-      {data ? (
+      {/* {data ? (
         <PaginationComponent
           pages={
             Math.floor(data.totalResults / 20) <= 45
@@ -76,8 +75,9 @@ function RecipeList() {
         />
       ) : (
         <LoadingSpinner />
-      )}
+      )} */}
     </Container>
   );
 }
-export default RecipeList;
+
+export default FavoriteRecipesList;
