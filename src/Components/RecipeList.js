@@ -6,6 +6,8 @@ import LoadingSpinner from './LoadingSpinner';
 import Title from './Title';
 import PaginationComponent from './Pagination';
 import { useState } from 'react';
+import FavoriteButton from './FavoriteButton';
+import { useSelectFavorite } from '../Context/FavoriteRecipe';
 
 function RecipeList() {
   const { meal_type, category } = useParams();
@@ -14,6 +16,15 @@ function RecipeList() {
   const url = `https://api.spoonacular.com/recipes/complexSearch?number=20&offset=${offset}&${category}=${meal_type}`;
 
   const [data, error] = useFetch(url);
+  const { favorite, setFavorite } = useSelectFavorite();
+
+  const saveFavorite = (id) => {
+    if (!favorite.includes(id)) {
+      setFavorite([...favorite, id]);
+    } else {
+      setFavorite([...favorite.filter((filteredItem) => filteredItem !== id)]);
+    }
+  };
 
   return (
     <Container>
@@ -30,8 +41,21 @@ function RecipeList() {
           data.results.map((meal) => (
             <Card key={meal.id} style={{ width: '14rem', margin: '10px' }}>
               <Card.Img variant="top" src={meal.image} />
-              <Card.Body>
+              <Card.Body
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                }}
+              >
                 <Card.Title>{meal.title}</Card.Title>
+                <div>
+                  <FavoriteButton
+                    meal={meal}
+                    saveFavorite={saveFavorite}
+                    favorite={favorite}
+                  />
+                </div>
               </Card.Body>
             </Card>
           ))

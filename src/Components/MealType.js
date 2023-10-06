@@ -2,13 +2,14 @@ import { Container } from 'react-bootstrap';
 import { mealTypeData } from '../Data/mealTypeData';
 import { cuisineData } from '../Data/cuisineData';
 import Button from 'react-bootstrap/Button';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 function MealType() {
   const { category } = useParams();
   let list;
   if (category === 'type') list = mealTypeData;
   if (category === 'cuisine') list = cuisineData;
+
   return (
     <Container>
       <div
@@ -23,18 +24,30 @@ function MealType() {
             key={meal}
             variant="secondary"
             className="d-flex justify-content-center align-items-center"
-            href={`/meal-types/type/${meal}`}
             style={{
               width: '15rem',
               height: '6rem',
-              padding: '20px',
+              padding: '0',
               margin: '10px',
               flexGrow: 4,
               fontSize: '1.5rem',
               fontWeight: 'bold',
             }}
           >
-            {meal}
+            <Link
+              to={`/meal-types/type/${meal}`}
+              style={{
+                textDecoration: 'none',
+                color: 'white',
+                width: '100%',
+                height: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              {meal}
+            </Link>
           </Button>
         ))}
       </div>
