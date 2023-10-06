@@ -8,7 +8,7 @@ function PaginationComponent({ pages, setOffset }) {
   const handlePageChange = (pageNumber) => {
     if (pageNumber >= 1 && pageNumber <= totalPages) {
       setCurrentPage(pageNumber);
-      setOffset(pageNumber * 20);
+      pageNumber === 1 ? setOffset(0) : setOffset(pageNumber * 20);
     }
   };
 

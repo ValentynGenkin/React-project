@@ -13,8 +13,11 @@ function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<MainScreenComponent />} />
         <Route path="random-recipe/:id" element={<SingleRecipe />} />
-        <Route path="meal-types" element={<MealType />} />
-        <Route path="meal-types/:meal_type" element={<RecipeList />} />
+        <Route path="meal-types/:category" element={<MealType />} />
+        <Route
+          path="meal-types/:category/:meal_type"
+          element={<RecipeList />}
+        />
         <Route path="*" element={<div>Page not found. Error 404</div>} />
       </Route>
     </Routes>

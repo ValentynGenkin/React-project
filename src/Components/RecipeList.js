@@ -8,24 +8,17 @@ import PaginationComponent from './Pagination';
 import { useState } from 'react';
 
 function RecipeList() {
-  const { meal_type } = useParams();
+  const { meal_type, category } = useParams();
 
   const [offset, setOffset] = useState(0);
-  const url = `https://api.spoonacular.com/recipes/complexSearch?number=20&offset=${offset}&type=${meal_type}`;
+  const url = `https://api.spoonacular.com/recipes/complexSearch?number=20&offset=${offset}&${category}=${meal_type}`;
 
   const [data, error] = useFetch(url);
 
   return (
     <Container>
       <Title text={meal_type} />
-      {data ? (
-        <PaginationComponent
-          pages={Math.floor(data.totalResults / 20)}
-          setOffset={setOffset}
-        />
-      ) : (
-        <LoadingSpinner />
-      )}
+
       <Container
         style={{
           display: 'flex',
@@ -46,6 +39,18 @@ function RecipeList() {
           <LoadingSpinner />
         )}
       </Container>
+      {data ? (
+        <PaginationComponent
+          pages={
+            Math.floor(data.totalResults / 20) <= 45
+              ? Math.floor(data.totalResults / 20)
+              : 45
+          }
+          setOffset={setOffset}
+        />
+      ) : (
+        <LoadingSpinner />
+      )}
     </Container>
   );
 }

@@ -21,21 +21,25 @@ function Navigation() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="#link">Recipes</Nav.Link>
+            <Nav.Link href={'/'}>Recipes</Nav.Link>
             <NavDropdown title="Recipes by country" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">
+              <NavDropdown.Item href="/meal-types/cuisine">
                 All category
               </NavDropdown.Item>
               {cuisineData.map((item) => (
-                <NavDropdown.Item href="#action/3.1">{item}</NavDropdown.Item>
+                <NavDropdown.Item href={`/meal-types/cuisine/${item}`}>
+                  {item}
+                </NavDropdown.Item>
               ))}
             </NavDropdown>
             <NavDropdown title="Recipes by type" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">
+              <NavDropdown.Item href={'/meal-types/type'}>
                 All category
               </NavDropdown.Item>
               {mealTypeData.map((item) => (
-                <NavDropdown.Item href="#action/3.1">{item}</NavDropdown.Item>
+                <NavDropdown.Item href={`/meal-types/type/${item}`}>
+                  {item}
+                </NavDropdown.Item>
               ))}
             </NavDropdown>
           </Nav>

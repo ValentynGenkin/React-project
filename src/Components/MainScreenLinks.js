@@ -2,8 +2,12 @@ import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
 
 function MainScreenLinks({ imgUrl, text }) {
+  const urlPoint = text.replace(' cuisine', '');
   return (
-    <Link to="/" style={{ textDecoration: 'none' }}>
+    <Link
+      to={`/meal-types/cuisine/${urlPoint}`}
+      style={{ textDecoration: 'none' }}
+    >
       <Card style={{ margin: '15px 0' }}>
         <Card.Body style={{ display: 'flex' }}>
           <Card.Text className="h3">{text}</Card.Text>

@@ -9,7 +9,7 @@ function MainScreenComponent() {
     <>
       <MainCarousel />
       <Title text={'Try something new'} />
-      <CardMainScreen />
+      {/* <CardMainScreen /> */}
       <Title text={'Explore the cuisines of different countries '} />
       <Container>
         <MainScreenLinks
@@ -18,13 +18,19 @@ function MainScreenComponent() {
         />
         <MainScreenLinks
           imgUrl={'./assets/greece.jpg'}
-          text={'Greece cuisine'}
+          text={'Greek cuisine'}
         />
-        <MainScreenLinks imgUrl={'./assets/japan.jpg'} text={'Japan cuisine'} />
-        <MainScreenLinks imgUrl={'./assets/italy.jpg'} text={'Italy cuisine'} />
+        <MainScreenLinks
+          imgUrl={'./assets/japan.jpg'}
+          text={'Japanese cuisine'}
+        />
+        <MainScreenLinks
+          imgUrl={'./assets/italy.jpg'}
+          text={'Italian cuisine'}
+        />
         <MainScreenLinks
           imgUrl={'./assets/vietnam.jpg'}
-          text={'Vietnam cuisine'}
+          text={'Vietnamese cuisine'}
         />
       </Container>
     </>
