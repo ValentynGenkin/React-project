@@ -1,11 +1,16 @@
 import Pagination from 'react-bootstrap/Pagination';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-function PaginationComponent({ pages, setOffset }) {
+function PaginationComponent({ pages, setOffset, meal_type }) {
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = pages;
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [meal_type]);
+
   const handlePageChange = (pageNumber) => {
+    window.scrollTo(0, 0);
     if (pageNumber >= 1 && pageNumber <= totalPages) {
       setCurrentPage(pageNumber);
       pageNumber === 1 ? setOffset(0) : setOffset(pageNumber * 20);

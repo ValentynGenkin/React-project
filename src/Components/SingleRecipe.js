@@ -1,11 +1,13 @@
 import { Container, Image } from 'react-bootstrap';
 import Title from './Title';
-import { useParams } from 'react-router-dom';
 import useFetch from '../Hooks/useFetch';
 import LoadingSpinner from './LoadingSpinner';
+import { useLocation } from 'react-router-dom';
 
 function SingleRecipe() {
-  const { id } = useParams();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const id = searchParams.get('id');
 
   const url = `https://api.spoonacular.com/recipes/${id}/information?includeNutrition=false&limitLicense=true`;
 

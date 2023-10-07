@@ -9,7 +9,7 @@ function MainScreenComponent() {
     <>
       <MainCarousel />
       <Title text={'Try something new'} />
-      {/* <CardMainScreen /> */}
+      <CardMainScreen />
       <Title text={'Explore the cuisines of different countries '} />
       <Container>
         <MainScreenLinks

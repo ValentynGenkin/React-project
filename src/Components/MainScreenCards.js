@@ -3,11 +3,24 @@ import Card from 'react-bootstrap/Card';
 import useFetch from '../Hooks/useFetch';
 import { Link } from 'react-router-dom';
 import LoadingSpinner from './LoadingSpinner';
+import FavoriteButton from './FavoriteButton';
+import { useSelectFavorite } from '../Context/FavoriteRecipe';
 
 function CardMainScreen() {
   const url = 'https://api.spoonacular.com/recipes/random?number=4';
 
   const [data, error] = useFetch(url);
+  const { favorite, setFavorite } = useSelectFavorite();
+
+  const saveFavorite = (id) => {
+    if (!favorite.includes(id)) {
+      setFavorite([...favorite, id]);
+      localStorage.setItem(id, id);
+    } else {
+      setFavorite([...favorite.filter((filteredItem) => filteredItem !== id)]);
+      localStorage.removeItem(id, id);
+    }
+  };
 
   return (
     <Container
@@ -19,31 +32,33 @@ function CardMainScreen() {
     >
       {data ? (
         data.recipes.map((item) => (
-          <Link to={`random-recipe/${item.id}`}>
-            <Card
-              key={item.id}
-              border="light"
-              bg="light"
-              text="black"
-              style={{ width: '18rem', margin: '10px' }}
+          <Card
+            key={item.id}
+            bg="light"
+            text="black"
+            style={{ width: '18rem', margin: '10px' }}
+          >
+            <Card.Img variant="top" src={item.image} />
+            <Card.Body
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+              }}
             >
-              <Card.Img
-                variant="top"
-                src={item.image}
-                style={{ objectFit: 'contain' }}
-              />
-              <Card.Body
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                }}
-              >
+              <Link to={`random-recipe/resource?id=${item.id}`}>
                 <Card.Title>{item.title}</Card.Title>
-                <Card.Text>Ready in {item.readyInMinutes} min</Card.Text>
-              </Card.Body>
-            </Card>
-          </Link>
+              </Link>
+              <Card.Text>Ready in {item.readyInMinutes} min</Card.Text>
+              <div>
+                <FavoriteButton
+                  meal={item}
+                  saveFavorite={saveFavorite}
+                  favorite={favorite}
+                />
+              </div>
+            </Card.Body>
+          </Card>
         ))
       ) : (
         <LoadingSpinner />

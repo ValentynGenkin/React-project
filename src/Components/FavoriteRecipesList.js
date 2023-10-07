@@ -1,12 +1,11 @@
 import { useSelectFavorite } from '../Context/FavoriteRecipe';
 import useFetch from '../Hooks/useFetch';
-import { useState } from 'react';
 import { Container } from 'react-bootstrap';
 import Title from './Title';
 import Card from 'react-bootstrap/Card';
-import PaginationComponent from './Pagination';
 import LoadingSpinner from './LoadingSpinner';
 import FavoriteButton from './FavoriteButton';
+import { Link } from 'react-router-dom';
 
 function FavoriteRecipesList() {
   const { favorite, setFavorite } = useSelectFavorite();
@@ -22,8 +21,10 @@ function FavoriteRecipesList() {
   const saveFavorite = (id) => {
     if (!favorite.includes(id)) {
       setFavorite([...favorite, id]);
+      localStorage.setItem(id, id);
     } else {
       setFavorite([...favorite.filter((filteredItem) => filteredItem !== id)]);
+      localStorage.removeItem(id, id);
     }
   };
 
@@ -40,7 +41,7 @@ function FavoriteRecipesList() {
       >
         {data ? (
           data.map((meal) => (
-            <Card key={meal.id} style={{ width: '14rem', margin: '10px' }}>
+            <Card key={meal.id} style={{ width: '18rem', margin: '10px' }}>
               <Card.Img variant="top" src={meal.image} />
               <Card.Body
                 style={{
@@ -49,7 +50,10 @@ function FavoriteRecipesList() {
                   justifyContent: 'space-between',
                 }}
               >
-                <Card.Title>{meal.title}</Card.Title>
+                <Link to={`/favorite/resource?id=${meal.id}`}>
+                  <Card.Title>{meal.title}</Card.Title>
+                </Link>
+                <Card.Text>Ready in {meal.readyInMinutes} min</Card.Text>
                 <div>
                   <FavoriteButton
                     meal={meal}
@@ -64,18 +68,6 @@ function FavoriteRecipesList() {
           <LoadingSpinner />
         )}
       </Container>
-      {/* {data ? (
-        <PaginationComponent
-          pages={
-            Math.floor(data.totalResults / 20) <= 45
-              ? Math.floor(data.totalResults / 20)
-              : 45
-          }
-          setOffset={setOffset}
-        />
-      ) : (
-        <LoadingSpinner />
-      )} */}
     </Container>
   );
 }
