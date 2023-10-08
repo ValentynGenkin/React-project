@@ -5,20 +5,30 @@ import useFetch from '../Hooks/useFetch';
 import LoadingSpinner from './LoadingSpinner';
 import Title from './Title';
 import PaginationComponent from './Pagination';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import FavoriteButton from './FavoriteButton';
 import { useSelectFavorite } from '../Context/FavoriteRecipe';
+import { useCurrentPage } from '../Context/CurrentPage';
 
 function RecipeList() {
   const { favorite, setFavorite } = useSelectFavorite();
+  const { currentPage, setCurrentPage } = useCurrentPage();
   const { meal_type, category } = useParams();
-  const [offset, setOffset] = useState(0);
 
   useEffect(() => {
-    setOffset(0);
-  }, [meal_type]);
+    currentPage.savePosition &&
+      setCurrentPage({
+        page: currentPage.page,
+        offset: currentPage.offset,
+      });
+  }, [
+    currentPage.offset,
+    currentPage.page,
+    currentPage.savePosition,
+    setCurrentPage,
+  ]);
 
-  const url = `https://api.spoonacular.com/recipes/complexSearch?number=20&offset=${offset}&${category}=${meal_type}`;
+  const url = `https://api.spoonacular.com/recipes/complexSearch?number=20&offset=${currentPage.offset}&${category}=${meal_type}`;
 
   const [data, error] = useFetch(url);
 
@@ -60,7 +70,7 @@ function RecipeList() {
                 }}
               >
                 <Link
-                  to={`/meal-types/${category}/${meal_type}/resource?id=${meal.id}`}
+                  to={`/meal-types/${category}/${meal_type}/resource?id=${meal.id}&page=${currentPage.page}&offset=${currentPage.offset}`}
                 >
                   <Card.Title>{meal.title}</Card.Title>
                 </Link>
@@ -82,8 +92,8 @@ function RecipeList() {
         (totalPages >= 1 ? (
           <PaginationComponent
             pages={totalPages}
-            setOffset={setOffset}
-            meal_type={meal_type}
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
           />
         ) : (
           ''

@@ -9,7 +9,6 @@ import { Link } from 'react-router-dom';
 
 function FavoriteRecipesList() {
   const { favorite, setFavorite } = useSelectFavorite();
-  // const [offset, setOffset] = useState(0);
 
   const idList = favorite.join(',');
 

@@ -9,9 +9,19 @@ import { mealTypeData } from '../Data/mealTypeData';
 import Badge from 'react-bootstrap/Badge';
 import { useSelectFavorite } from '../Context/FavoriteRecipe';
 import { Link } from 'react-router-dom';
+import { useCurrentPage } from '../Context/CurrentPage';
 
 function Navigation() {
   const { favorite } = useSelectFavorite();
+  const { setCurrentPage } = useCurrentPage();
+
+  const clearPosition = () => {
+    setCurrentPage({
+      page: 1,
+      offset: 0,
+      savePosition: false,
+    });
+  };
 
   return (
     <Navbar
@@ -32,7 +42,13 @@ function Navigation() {
               Recipes
             </Nav.Link>
             <NavDropdown title="Recipes by country" id="basic-nav-dropdown">
-              <NavDropdown.Item as={Link} to="/meal-types/cuisine">
+              <NavDropdown.Item
+                as={Link}
+                to="/meal-types/cuisine"
+                onClick={() => {
+                  clearPosition();
+                }}
+              >
                 All category
               </NavDropdown.Item>
               {cuisineData.map((item) => (
@@ -40,13 +56,22 @@ function Navigation() {
                   as={Link}
                   to={`/meal-types/cuisine/${item}`}
                   key={item}
+                  onClick={() => {
+                    clearPosition();
+                  }}
                 >
                   {item}
                 </NavDropdown.Item>
               ))}
             </NavDropdown>
             <NavDropdown title="Recipes by type" id="basic-nav-dropdown">
-              <NavDropdown.Item as={Link} to="/meal-types/type">
+              <NavDropdown.Item
+                as={Link}
+                to="/meal-types/type"
+                onClick={() => {
+                  clearPosition();
+                }}
+              >
                 All category
               </NavDropdown.Item>
               {mealTypeData.map((item) => (
@@ -54,6 +79,9 @@ function Navigation() {
                   as={Link}
                   to={`/meal-types/type/${item}`}
                   key={item}
+                  onClick={() => {
+                    clearPosition();
+                  }}
                 >
                   {item}
                 </NavDropdown.Item>

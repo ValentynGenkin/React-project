@@ -3,16 +3,28 @@ import Title from './Title';
 import useFetch from '../Hooks/useFetch';
 import LoadingSpinner from './LoadingSpinner';
 import { useLocation } from 'react-router-dom';
+import { useCurrentPage } from '../Context/CurrentPage';
+import { useEffect } from 'react';
 
 function SingleRecipe() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const id = searchParams.get('id');
+  const page = searchParams.get('page');
+  const offset = searchParams.get('offset');
+
+  const { setCurrentPage } = useCurrentPage();
+  useEffect(() => {
+    setCurrentPage({
+      page: parseInt(page),
+      offset: parseInt(offset),
+      savePosition: true,
+    });
+  }, []);
 
   const url = `https://api.spoonacular.com/recipes/${id}/information?includeNutrition=false&limitLicense=true`;
 
   const [data, error] = useFetch(url);
-  console.log(data);
 
   return (
     <Container>
