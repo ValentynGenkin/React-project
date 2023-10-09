@@ -6,7 +6,7 @@ import LoadingSpinner from './LoadingSpinner';
 import FavoriteButton from './FavoriteButton';
 import { useSelectFavorite } from '../Context/FavoriteRecipe';
 
-function CardMainScreen() {
+function MainScreenRandomCards() {
   const url = 'https://api.spoonacular.com/recipes/random?number=4';
 
   const [data, error] = useFetch(url);
@@ -67,4 +67,4 @@ function CardMainScreen() {
   );
 }
 
-export default CardMainScreen;
+export default MainScreenRandomCards;

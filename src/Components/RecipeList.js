@@ -13,22 +13,19 @@ import { useCurrentPage } from '../Context/CurrentPage';
 function RecipeList() {
   const { favorite, setFavorite } = useSelectFavorite();
   const { currentPage, setCurrentPage } = useCurrentPage();
-  const { meal_type, category } = useParams();
+  const { meal_type, category, input } = useParams();
 
   useEffect(() => {
-    currentPage.savePosition &&
-      setCurrentPage({
-        page: currentPage.page,
-        offset: currentPage.offset,
-      });
-  }, [
-    currentPage.offset,
-    currentPage.page,
-    currentPage.savePosition,
-    setCurrentPage,
-  ]);
+    setCurrentPage({
+      page: currentPage.page,
+      offset: currentPage.offset,
+      savePosition: false,
+    });
+  }, []);
 
-  const url = `https://api.spoonacular.com/recipes/complexSearch?number=20&offset=${currentPage.offset}&${category}=${meal_type}`;
+  const url = input
+    ? `https://api.spoonacular.com/recipes/complexSearch?query=${input}&number=20&offset=${currentPage.offset}`
+    : `https://api.spoonacular.com/recipes/complexSearch?number=20&offset=${currentPage.offset}&${category}=${meal_type}`;
 
   const [data, error] = useFetch(url);
 
@@ -43,61 +40,77 @@ function RecipeList() {
   };
 
   const totalPages =
-    data && Math.floor(data.totalResults / 20) <= 45
-      ? Math.floor(data.totalResults / 20)
+    data && Math.ceil(data.totalResults / 20) <= 45
+      ? Math.ceil(data.totalResults / 20)
       : 45;
 
   return (
-    <Container>
-      <Title text={meal_type} />
+    <Container style={{ minHeight: 'calc(100vh - 95px)' }}>
+      {data && data.totalResults === 0 ? (
+        <p className="h3">{`No matches found: ${input}`} </p>
+      ) : (
+        <>
+          <Title text={input ? input : meal_type} />
+          {data &&
+            (totalPages > 1 ? (
+              <PaginationComponent
+                pages={totalPages}
+                setCurrentPage={setCurrentPage}
+                currentPage={currentPage}
+              />
+            ) : (
+              ''
+            ))}
 
-      <Container
-        style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          justifyContent: 'space-evenly',
-        }}
-      >
-        {data ? (
-          data.results.map((meal) => (
-            <Card key={meal.id} style={{ width: '18rem', margin: '10px' }}>
-              <Card.Img variant="top" src={meal.image} />
-              <Card.Body
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                }}
-              >
-                <Link
-                  to={`/meal-types/${category}/${meal_type}/resource?id=${meal.id}&page=${currentPage.page}&offset=${currentPage.offset}`}
-                >
-                  <Card.Title>{meal.title}</Card.Title>
-                </Link>
-                <div>
-                  <FavoriteButton
-                    meal={meal}
-                    saveFavorite={saveFavorite}
-                    favorite={favorite}
-                  />
-                </div>
-              </Card.Body>
-            </Card>
-          ))
-        ) : (
-          <LoadingSpinner />
-        )}
-      </Container>
-      {data &&
-        (totalPages >= 1 ? (
-          <PaginationComponent
-            pages={totalPages}
-            setCurrentPage={setCurrentPage}
-            currentPage={currentPage}
-          />
-        ) : (
-          ''
-        ))}
+          <Container
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'space-evenly',
+            }}
+          >
+            {data ? (
+              data.results.map((meal) => (
+                <Card key={meal.id} style={{ width: '18rem', margin: '10px' }}>
+                  <Card.Img variant="top" src={meal.image} />
+                  <Card.Body
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'space-between',
+                    }}
+                  >
+                    <Link
+                      to={`/meal-types/${category}/${meal_type}/resource?id=${meal.id}&page=${currentPage.page}&offset=${currentPage.offset}`}
+                    >
+                      <Card.Title>{meal.title}</Card.Title>
+                    </Link>
+                    <div>
+                      <FavoriteButton
+                        meal={meal}
+                        saveFavorite={saveFavorite}
+                        favorite={favorite}
+                      />
+                    </div>
+                  </Card.Body>
+                </Card>
+              ))
+            ) : (
+              <LoadingSpinner />
+            )}
+          </Container>
+          {data &&
+            (totalPages > 1 ? (
+              <PaginationComponent
+                pages={totalPages}
+                setCurrentPage={setCurrentPage}
+                currentPage={currentPage}
+              />
+            ) : (
+              ''
+            ))}
+        </>
+      )}
     </Container>
   );
 }

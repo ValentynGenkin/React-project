@@ -1,3 +1,4 @@
+import { Container } from 'react-bootstrap';
 import Pagination from 'react-bootstrap/Pagination';
 
 function PaginationComponent({ pages, currentPage, setCurrentPage }) {
@@ -18,9 +19,10 @@ function PaginationComponent({ pages, currentPage, setCurrentPage }) {
 
   const generatePaginationItems = () => {
     const items = [];
+
     for (
       let pageNumber = Math.max(currentPage.page - 2, 1);
-      pageNumber <= Math.min(currentPage.page + 3, totalPages);
+      pageNumber <= Math.min(currentPage.page + 2, totalPages);
       pageNumber++
     ) {
       items.push(
@@ -37,7 +39,12 @@ function PaginationComponent({ pages, currentPage, setCurrentPage }) {
   };
 
   return (
-    <div>
+    <Container
+      style={{
+        display: 'flex',
+        justifyContent: 'space-evenly',
+      }}
+    >
       <Pagination>
         <Pagination.First onClick={() => handlePageChange(1)} />
         <Pagination.Prev
@@ -49,7 +56,7 @@ function PaginationComponent({ pages, currentPage, setCurrentPage }) {
         />
         <Pagination.Last onClick={() => handlePageChange(totalPages)} />
       </Pagination>
-    </div>
+    </Container>
   );
 }
 

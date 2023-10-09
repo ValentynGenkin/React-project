@@ -12,7 +12,6 @@ function FavoriteRecipesList() {
 
   const idList = favorite.join(',');
 
-  console.log(idList);
   const url = `https://api.spoonacular.com/recipes/informationBulk?ids=${idList}&includeNutrition=false`;
 
   const [data, error] = useFetch(url);
@@ -28,7 +27,7 @@ function FavoriteRecipesList() {
   };
 
   return (
-    <Container>
+    <Container style={{ minHeight: 'calc(100vh - 95px)' }}>
       <Title text={'Favorite recipes'} />
 
       <Container
@@ -38,33 +37,37 @@ function FavoriteRecipesList() {
           justifyContent: 'space-evenly',
         }}
       >
-        {data ? (
-          data.map((meal) => (
-            <Card key={meal.id} style={{ width: '18rem', margin: '10px' }}>
-              <Card.Img variant="top" src={meal.image} />
-              <Card.Body
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                }}
-              >
-                <Link to={`/favorite/resource?id=${meal.id}`}>
-                  <Card.Title>{meal.title}</Card.Title>
-                </Link>
-                <Card.Text>Ready in {meal.readyInMinutes} min</Card.Text>
-                <div>
-                  <FavoriteButton
-                    meal={meal}
-                    saveFavorite={saveFavorite}
-                    favorite={favorite}
-                  />
-                </div>
-              </Card.Body>
-            </Card>
-          ))
+        {data && data.length !== 0 ? (
+          data ? (
+            data.map((meal) => (
+              <Card key={meal.id} style={{ width: '18rem', margin: '10px' }}>
+                <Card.Img variant="top" src={meal.image} />
+                <Card.Body
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                  }}
+                >
+                  <Link to={`/favorite/resource?id=${meal.id}`}>
+                    <Card.Title>{meal.title}</Card.Title>
+                  </Link>
+                  <Card.Text>Ready in {meal.readyInMinutes} min</Card.Text>
+                  <div>
+                    <FavoriteButton
+                      meal={meal}
+                      saveFavorite={saveFavorite}
+                      favorite={favorite}
+                    />
+                  </div>
+                </Card.Body>
+              </Card>
+            ))
+          ) : (
+            <LoadingSpinner />
+          )
         ) : (
-          <LoadingSpinner />
+          <p className="h3">No saved recipes</p>
         )}
       </Container>
     </Container>

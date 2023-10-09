@@ -4,14 +4,14 @@ import { cuisineData } from '../Data/cuisineData';
 import Button from 'react-bootstrap/Button';
 import { Link, useParams } from 'react-router-dom';
 
-function MealType() {
+function MealTypeList() {
   const { category } = useParams();
   let list;
   if (category === 'type') list = mealTypeData;
   if (category === 'cuisine') list = cuisineData;
 
   return (
-    <Container>
+    <Container style={{ minHeight: 'calc(100vh - 95px)' }}>
       <div
         style={{
           display: 'flex',
@@ -55,4 +55,4 @@ function MealType() {
   );
 }
 
-export default MealType;
+export default MealTypeList;

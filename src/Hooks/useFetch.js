@@ -16,10 +16,8 @@ function useFetch(url) {
         }
         setData(data);
         console.log(data);
-        console.log(response);
         setError(null);
       } catch (error) {
-        console.error(error);
         setError(error);
       }
     };

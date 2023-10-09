@@ -10,10 +10,12 @@ import Badge from 'react-bootstrap/Badge';
 import { useSelectFavorite } from '../Context/FavoriteRecipe';
 import { Link } from 'react-router-dom';
 import { useCurrentPage } from '../Context/CurrentPage';
+import { useState } from 'react';
 
 function Navigation() {
   const { favorite } = useSelectFavorite();
   const { setCurrentPage } = useCurrentPage();
+  const [searchInput, setSearchInput] = useState('');
 
   const clearPosition = () => {
     setCurrentPage({
@@ -21,6 +23,11 @@ function Navigation() {
       offset: 0,
       savePosition: false,
     });
+  };
+
+  const handleSearch = (e) => {
+    const inputData = e.target.value;
+    setSearchInput(inputData);
   };
 
   return (
@@ -31,15 +38,14 @@ function Navigation() {
       className="bg-body-tertiary"
     >
       <Container>
-        <Navbar.Brand href="#home">React Project HYF</Navbar.Brand>
+        <Navbar.Brand as={Link} to="/">
+          React Project HYF
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link as={Link} to="/">
               Home
-            </Nav.Link>
-            <Nav.Link as={Link} to="/">
-              Recipes
             </Nav.Link>
             <NavDropdown title="Recipes by country" id="basic-nav-dropdown">
               <NavDropdown.Item
@@ -101,8 +107,18 @@ function Navigation() {
               placeholder="Search"
               className="me-2"
               aria-label="Search"
+              onChange={handleSearch}
             />
-            <Button variant="outline-success">Search</Button>
+            <Link to={`/search/${searchInput}`}>
+              <Button
+                variant="outline-success"
+                onClick={() => {
+                  clearPosition();
+                }}
+              >
+                Search
+              </Button>
+            </Link>
           </Form>
         </Navbar.Collapse>
       </Container>

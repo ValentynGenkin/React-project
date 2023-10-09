@@ -1,4 +1,4 @@
-import CardMainScreen from './MainScreenCards';
+import MainScreenRandomCards from './MainScreenRandomCards';
 import Title from './Title';
 import MainCarousel from './MainCarousel';
 import MainScreenLinks from './MainScreenLinks';
@@ -9,7 +9,7 @@ function MainScreenComponent() {
     <>
       <MainCarousel />
       <Title text={'Try something new'} />
-      <CardMainScreen />
+      <MainScreenRandomCards />
       <Title text={'Explore the cuisines of different countries '} />
       <Container>
         <MainScreenLinks

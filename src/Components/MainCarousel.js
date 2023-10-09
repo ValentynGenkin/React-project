@@ -1,5 +1,6 @@
 import { Container } from 'react-bootstrap';
 import Carousel from 'react-bootstrap/Carousel';
+import { Link } from 'react-router-dom';
 
 function MainCarousel() {
   return (
@@ -11,11 +12,9 @@ function MainCarousel() {
             src="../assets/pizza.jpg"
             alt="First slide"
           />
-          <Carousel.Caption>
-            <h2>First slide label</h2>
-            <p className="h4">
-              Nulla vitae elit libero, a pharetra augue mollis interdum.
-            </p>
+          <Carousel.Caption as={Link} to={'/search/pizza'}>
+            <h2>Pizza</h2>
+            <p className="h4">Pizza Passion: A Slice of Italy</p>
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
@@ -24,11 +23,9 @@ function MainCarousel() {
             src="../assets/pasta.jpg"
             alt="Second slide"
           />
-          <Carousel.Caption>
-            <h2>Second slide label</h2>
-            <p className="h4">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            </p>
+          <Carousel.Caption as={Link} to={'/search/pasta'}>
+            <h2>Pasta</h2>
+            <p className="h4">Italian Pasta Magic: A Gastronomic Exploration</p>
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
@@ -37,11 +34,9 @@ function MainCarousel() {
             src="../assets/meat.jpg"
             alt="Third slide"
           />
-          <Carousel.Caption>
-            <h2>Third slide label</h2>
-            <p className="h4">
-              Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-            </p>
+          <Carousel.Caption as={Link} to={'/search/steak'}>
+            <h2>Steak</h2>
+            <p className="h4">Discover the World of Steak Perfection</p>
           </Carousel.Caption>
         </Carousel.Item>
       </Carousel>
