@@ -1,0 +1,13 @@
+.main-screen-card {
+  margin: 15px 0;
+}
+
+.main-screen-card-body {
+  display: flex;
+}
+
+.main-screen-card-img {
+  height: 10rem;
+  width: 100%;
+  object-fit: cover;
+}

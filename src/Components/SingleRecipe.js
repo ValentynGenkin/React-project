@@ -7,6 +7,8 @@ import { useCurrentPage } from '../Context/CurrentPage';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import '../CSS/SingleRecipe.css';
+
 function SingleRecipe() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -29,10 +31,10 @@ function SingleRecipe() {
   const [data, error] = useFetch(url);
 
   return (
-    <Container style={{ minHeight: 'calc(100vh - 95px)' }}>
+    <Container className="single-recipe-container">
       <Button
+        className="back-button"
         variant="outline-success"
-        style={{ float: 'right', margin: '20px' }}
         onClick={() => {
           navigate(-1);
         }}
@@ -56,7 +58,9 @@ function SingleRecipe() {
           )}
           <p>
             Full recipe instruction:{' '}
-            <a href={data.sourceUrl}>{data.creditsText}</a>
+            <a href={data.sourceUrl} target={'_blank'} rel={'noreferrer'}>
+              {data.creditsText}
+            </a>
           </p>
           <p className="h5">Ingredients:</p>
           <ul>

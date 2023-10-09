@@ -1,0 +1,16 @@
+.main-screen-random-card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.main-screen-random-card {
+  width: 18rem;
+  margin: 10px;
+}
+
+.main-screen-random-card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

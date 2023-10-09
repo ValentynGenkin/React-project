@@ -4,6 +4,8 @@ import { cuisineData } from '../Data/cuisineData';
 import Button from 'react-bootstrap/Button';
 import { Link, useParams } from 'react-router-dom';
 
+import '../CSS/MealTypeList.css';
+
 function MealTypeList() {
   const { category } = useParams();
   let list;
@@ -11,40 +13,17 @@ function MealTypeList() {
   if (category === 'cuisine') list = cuisineData;
 
   return (
-    <Container style={{ minHeight: 'calc(100vh - 95px)' }}>
-      <div
-        style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          justifyContent: 'center',
-        }}
-      >
+    <Container className="meal-type-container">
+      <div className="meal-type-list">
         {list.map((meal) => (
           <Button
+            className="meal-type-list-button"
             key={meal}
             variant="secondary"
-            className="d-flex justify-content-center align-items-center"
-            style={{
-              width: '15rem',
-              height: '6rem',
-              padding: '0',
-              margin: '10px',
-              flexGrow: 4,
-              fontSize: '1.5rem',
-              fontWeight: 'bold',
-            }}
           >
             <Link
               to={`/meal-types/type/${meal}`}
-              style={{
-                textDecoration: 'none',
-                color: 'white',
-                width: '100%',
-                height: '100%',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
+              className="meal-type-list-button-link"
             >
               {meal}
             </Link>

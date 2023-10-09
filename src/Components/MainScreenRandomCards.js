@@ -6,6 +6,8 @@ import LoadingSpinner from './LoadingSpinner';
 import FavoriteButton from './FavoriteButton';
 import { useSelectFavorite } from '../Context/FavoriteRecipe';
 
+import '../CSS/MainScreenRandomCards.css';
+
 function MainScreenRandomCards() {
   const url = 'https://api.spoonacular.com/recipes/random?number=4';
 
@@ -23,29 +25,12 @@ function MainScreenRandomCards() {
   };
 
   return (
-    <Container
-      style={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'space-evenly',
-      }}
-    >
+    <Container className="main-screen-random-card-container">
       {data ? (
         data.recipes.map((item) => (
-          <Card
-            key={item.id}
-            bg="light"
-            text="black"
-            style={{ width: '18rem', margin: '10px' }}
-          >
+          <Card key={item.id} bg="light" className="main-screen-random-card">
             <Card.Img variant="top" src={item.image} />
-            <Card.Body
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-              }}
-            >
+            <Card.Body className="main-screen-random-card-body">
               <Link to={`random-recipe/resource?id=${item.id}`}>
                 <Card.Title>{item.title}</Card.Title>
               </Link>

@@ -7,6 +7,8 @@ import LoadingSpinner from './LoadingSpinner';
 import FavoriteButton from './FavoriteButton';
 import { Link } from 'react-router-dom';
 
+import '../CSS/FavoriteRecipesList.css';
+
 function FavoriteRecipesList() {
   const { favorite, setFavorite } = useSelectFavorite();
 
@@ -27,28 +29,16 @@ function FavoriteRecipesList() {
   };
 
   return (
-    <Container style={{ minHeight: 'calc(100vh - 95px)' }}>
+    <Container className="favorite-list-container">
       <Title text={'Favorite recipes'} />
 
-      <Container
-        style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          justifyContent: 'space-evenly',
-        }}
-      >
+      <Container className="favorite-list-card-container">
         {data && data.length !== 0 ? (
           data ? (
             data.map((meal) => (
-              <Card key={meal.id} style={{ width: '18rem', margin: '10px' }}>
+              <Card key={meal.id} className="favorite-list-card">
                 <Card.Img variant="top" src={meal.image} />
-                <Card.Body
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                  }}
-                >
+                <Card.Body className="favorite-list-card-body">
                   <Link to={`/favorite/resource?id=${meal.id}`}>
                     <Card.Title>{meal.title}</Card.Title>
                   </Link>

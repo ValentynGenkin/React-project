@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import FavoriteButton from './FavoriteButton';
 import { useSelectFavorite } from '../Context/FavoriteRecipe';
 import { useCurrentPage } from '../Context/CurrentPage';
+import '../CSS/RecipeList.css';
 
 function RecipeList() {
   const { favorite, setFavorite } = useSelectFavorite();
@@ -45,7 +46,7 @@ function RecipeList() {
       : 45;
 
   return (
-    <Container style={{ minHeight: 'calc(100vh - 95px)' }}>
+    <Container className="recipe-list-container">
       {data && data.totalResults === 0 ? (
         <p className="h3">{`No matches found: ${input}`} </p>
       ) : (
@@ -62,24 +63,12 @@ function RecipeList() {
               ''
             ))}
 
-          <Container
-            style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              justifyContent: 'space-evenly',
-            }}
-          >
+          <Container className="recipe-list-card-container">
             {data ? (
               data.results.map((meal) => (
-                <Card key={meal.id} style={{ width: '18rem', margin: '10px' }}>
+                <Card className="recipe-list-card" key={meal.id}>
                   <Card.Img variant="top" src={meal.image} />
-                  <Card.Body
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'space-between',
-                    }}
-                  >
+                  <Card.Body className="recipe-list-card-body">
                     <Link
                       to={`/meal-types/${category}/${meal_type}/resource?id=${meal.id}&page=${currentPage.page}&offset=${currentPage.offset}`}
                     >

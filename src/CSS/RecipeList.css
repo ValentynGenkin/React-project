@@ -1,0 +1,20 @@
+.recipe-list-container {
+  min-height: calc(100vh - 95px);
+}
+
+.recipe-list-card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.recipe-list-card {
+  width: 18rem;
+  margin: 10px;
+}
+
+.recipe-list-card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

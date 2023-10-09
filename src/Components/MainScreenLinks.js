@@ -2,6 +2,8 @@ import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
 import { useCurrentPage } from '../Context/CurrentPage';
 
+import '../CSS/MainScreenLinks.css';
+
 function MainScreenLinks({ imgUrl, text }) {
   const urlPoint = text.replace(' cuisine', '');
   const { setCurrentPage } = useCurrentPage();
@@ -17,19 +19,18 @@ function MainScreenLinks({ imgUrl, text }) {
   return (
     <Link
       to={`/meal-types/cuisine/${urlPoint}`}
-      style={{ textDecoration: 'none' }}
       onClick={() => {
         clearPosition();
       }}
     >
-      <Card style={{ margin: '15px 0' }}>
-        <Card.Body style={{ display: 'flex' }}>
+      <Card className="main-screen-card">
+        <Card.Body className="main-screen-card-body">
           <Card.Text className="h3">{text}</Card.Text>
         </Card.Body>
         <Card.Img
+          className="main-screen-card-img"
           variant="button"
           src={imgUrl}
-          style={{ height: '10rem', width: '100%', objectFit: 'cover' }}
         />
       </Card>
     </Link>
