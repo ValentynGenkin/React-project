@@ -15,7 +15,6 @@ function useFetch(url) {
           throw new Error(`HTTP Error! Status: ${response.status}`);
         }
         setData(data);
-        console.log(data);
         setError(null);
       } catch (error) {
         setError(error);
