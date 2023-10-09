@@ -25,11 +25,11 @@ function SingleRecipe() {
       offset: parseInt(offset),
       savePosition: true,
     });
-  }, []);
+  }, [offset, page, setCurrentPage]);
 
   const url = `https://api.spoonacular.com/recipes/${id}/information?includeNutrition=false&limitLicense=true`;
 
-  const [data, error] = useFetch(url);
+  const [data] = useFetch(url);
 
   return (
     <Container className="single-recipe-container">

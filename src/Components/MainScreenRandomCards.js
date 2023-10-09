@@ -12,7 +12,7 @@ import '../CSS/MainScreenRandomCards.css';
 function MainScreenRandomCards() {
   const url = 'https://api.spoonacular.com/recipes/random?number=4';
 
-  const [data, error] = useFetch(url);
+  const [data] = useFetch(url);
   const { favorite, setFavorite } = useSelectFavorite();
 
   return (

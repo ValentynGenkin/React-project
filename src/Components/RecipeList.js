@@ -23,13 +23,13 @@ function RecipeList() {
       offset: currentPage.offset,
       savePosition: false,
     });
-  }, []);
+  }, [currentPage.offset, currentPage.page, setCurrentPage]);
 
   const url = input
     ? `https://api.spoonacular.com/recipes/complexSearch?query=${input}&number=20&offset=${currentPage.offset}`
     : `https://api.spoonacular.com/recipes/complexSearch?number=20&offset=${currentPage.offset}&${category}=${meal_type}`;
 
-  const [data, error] = useFetch(url);
+  const [data] = useFetch(url);
 
   const totalPages =
     data && Math.ceil(data.totalResults / 20) <= 45

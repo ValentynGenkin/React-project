@@ -17,7 +17,7 @@ function FavoriteRecipesList() {
 
   const url = `https://api.spoonacular.com/recipes/informationBulk?ids=${idList}&includeNutrition=false`;
 
-  const [data, error] = useFetch(url);
+  const [data] = useFetch(url);
 
   return (
     <Container className="favorite-list-container">
