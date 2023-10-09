@@ -6,6 +6,7 @@ import Card from 'react-bootstrap/Card';
 import LoadingSpinner from './LoadingSpinner';
 import FavoriteButton from './FavoriteButton';
 import { Link } from 'react-router-dom';
+import { saveFavorite } from '../JSFunction/saveFavorite';
 
 import '../CSS/FavoriteRecipesList.css';
 
@@ -17,16 +18,6 @@ function FavoriteRecipesList() {
   const url = `https://api.spoonacular.com/recipes/informationBulk?ids=${idList}&includeNutrition=false`;
 
   const [data, error] = useFetch(url);
-
-  const saveFavorite = (id) => {
-    if (!favorite.includes(id)) {
-      setFavorite([...favorite, id]);
-      localStorage.setItem(id, id);
-    } else {
-      setFavorite([...favorite.filter((filteredItem) => filteredItem !== id)]);
-      localStorage.removeItem(id, id);
-    }
-  };
 
   return (
     <Container className="favorite-list-container">
@@ -48,6 +39,7 @@ function FavoriteRecipesList() {
                       meal={meal}
                       saveFavorite={saveFavorite}
                       favorite={favorite}
+                      setFavorite={setFavorite}
                     />
                   </div>
                 </Card.Body>

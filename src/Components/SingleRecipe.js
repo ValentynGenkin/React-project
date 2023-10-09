@@ -18,6 +18,7 @@ function SingleRecipe() {
   const offset = searchParams.get('offset') ? searchParams.get('offset') : 0;
 
   const { setCurrentPage } = useCurrentPage();
+
   useEffect(() => {
     setCurrentPage({
       page: parseInt(page),

@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import FavoriteButton from './FavoriteButton';
 import { useSelectFavorite } from '../Context/FavoriteRecipe';
 import { useCurrentPage } from '../Context/CurrentPage';
+import { saveFavorite } from '../JSFunction/saveFavorite';
 import '../CSS/RecipeList.css';
 
 function RecipeList() {
@@ -29,16 +30,6 @@ function RecipeList() {
     : `https://api.spoonacular.com/recipes/complexSearch?number=20&offset=${currentPage.offset}&${category}=${meal_type}`;
 
   const [data, error] = useFetch(url);
-
-  const saveFavorite = (id) => {
-    if (!favorite.includes(id)) {
-      setFavorite([...favorite, id]);
-      localStorage.setItem(id, id);
-    } else {
-      setFavorite([...favorite.filter((filteredItem) => filteredItem !== id)]);
-      localStorage.removeItem(id, id);
-    }
-  };
 
   const totalPages =
     data && Math.ceil(data.totalResults / 20) <= 45
@@ -79,6 +70,7 @@ function RecipeList() {
                         meal={meal}
                         saveFavorite={saveFavorite}
                         favorite={favorite}
+                        setFavorite={setFavorite}
                       />
                     </div>
                   </Card.Body>

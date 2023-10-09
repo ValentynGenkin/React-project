@@ -11,21 +11,14 @@ import { useSelectFavorite } from '../Context/FavoriteRecipe';
 import { Link } from 'react-router-dom';
 import { useCurrentPage } from '../Context/CurrentPage';
 import { useState } from 'react';
+import { clearPosition } from '../JSFunction/clearPosition';
 
 function Navigation() {
   const { favorite } = useSelectFavorite();
   const { setCurrentPage } = useCurrentPage();
   const [searchInput, setSearchInput] = useState('');
 
-  const clearPosition = () => {
-    setCurrentPage({
-      page: 1,
-      offset: 0,
-      savePosition: false,
-    });
-  };
-
-  const handleSearch = (e) => {
+  const handleInputChange = (e) => {
     const inputData = e.target.value;
     setSearchInput(inputData);
   };
@@ -52,7 +45,7 @@ function Navigation() {
                 as={Link}
                 to="/meal-types/cuisine"
                 onClick={() => {
-                  clearPosition();
+                  clearPosition(setCurrentPage);
                 }}
               >
                 All category
@@ -63,7 +56,7 @@ function Navigation() {
                   to={`/meal-types/cuisine/${item}`}
                   key={item}
                   onClick={() => {
-                    clearPosition();
+                    clearPosition(setCurrentPage);
                   }}
                 >
                   {item}
@@ -75,7 +68,7 @@ function Navigation() {
                 as={Link}
                 to="/meal-types/type"
                 onClick={() => {
-                  clearPosition();
+                  clearPosition(setCurrentPage);
                 }}
               >
                 All category
@@ -86,7 +79,7 @@ function Navigation() {
                   to={`/meal-types/type/${item}`}
                   key={item}
                   onClick={() => {
-                    clearPosition();
+                    clearPosition(setCurrentPage);
                   }}
                 >
                   {item}
@@ -107,13 +100,13 @@ function Navigation() {
               placeholder="Search"
               className="me-2"
               aria-label="Search"
-              onChange={handleSearch}
+              onChange={handleInputChange}
             />
             <Link to={`/search/${searchInput}`}>
               <Button
                 variant="outline-success"
                 onClick={() => {
-                  clearPosition();
+                  clearPosition(setCurrentPage);
                 }}
               >
                 Search

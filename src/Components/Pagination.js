@@ -1,5 +1,6 @@
 import { Container } from 'react-bootstrap';
 import Pagination from 'react-bootstrap/Pagination';
+import '../CSS/Pagination.css';
 
 function PaginationComponent({ pages, currentPage, setCurrentPage }) {
   const totalPages = pages;
@@ -39,12 +40,7 @@ function PaginationComponent({ pages, currentPage, setCurrentPage }) {
   };
 
   return (
-    <Container
-      style={{
-        display: 'flex',
-        justifyContent: 'space-evenly',
-      }}
-    >
+    <Container className="pagination-container">
       <Pagination>
         <Pagination.First onClick={() => handlePageChange(1)} />
         <Pagination.Prev

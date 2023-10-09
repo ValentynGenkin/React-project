@@ -1,4 +1,4 @@
-function FavoriteButton({ meal, saveFavorite, favorite }) {
+function FavoriteButton({ meal, saveFavorite, favorite, setFavorite }) {
   const isSelected = favorite.includes(meal.id);
 
   let favoriteImg;
@@ -14,7 +14,7 @@ function FavoriteButton({ meal, saveFavorite, favorite }) {
       src={favoriteImg}
       alt={'favorite-icon'}
       onClick={() => {
-        saveFavorite(meal.id);
+        saveFavorite(meal.id, favorite, setFavorite);
       }}
     />
   );

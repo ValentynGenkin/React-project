@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import LoadingSpinner from './LoadingSpinner';
 import FavoriteButton from './FavoriteButton';
 import { useSelectFavorite } from '../Context/FavoriteRecipe';
+import { saveFavorite } from '../JSFunction/saveFavorite';
 
 import '../CSS/MainScreenRandomCards.css';
 
@@ -13,16 +14,6 @@ function MainScreenRandomCards() {
 
   const [data, error] = useFetch(url);
   const { favorite, setFavorite } = useSelectFavorite();
-
-  const saveFavorite = (id) => {
-    if (!favorite.includes(id)) {
-      setFavorite([...favorite, id]);
-      localStorage.setItem(id, id);
-    } else {
-      setFavorite([...favorite.filter((filteredItem) => filteredItem !== id)]);
-      localStorage.removeItem(id, id);
-    }
-  };
 
   return (
     <Container className="main-screen-random-card-container">
@@ -40,6 +31,7 @@ function MainScreenRandomCards() {
                   meal={item}
                   saveFavorite={saveFavorite}
                   favorite={favorite}
+                  setFavorite={setFavorite}
                 />
               </div>
             </Card.Body>
