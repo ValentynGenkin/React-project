@@ -18,3 +18,7 @@
   flex-direction: column;
   justify-content: space-between;
 }
+
+.recipe-list-card-img {
+  object-fit: cover;
+}

@@ -58,7 +58,11 @@ function RecipeList() {
             {data ? (
               data.results.map((meal) => (
                 <Card className="recipe-list-card" key={meal.id}>
-                  <Card.Img variant="top" src={meal.image} />
+                  <Card.Img
+                    variant="top"
+                    src={meal.image}
+                    className="recipe-list-card-img"
+                  />
                   <Card.Body className="recipe-list-card-body">
                     <Link
                       to={`/meal-types/${category}/${meal_type}/resource?id=${meal.id}&page=${currentPage.page}&offset=${currentPage.offset}`}

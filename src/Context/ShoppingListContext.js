@@ -20,7 +20,7 @@ export function ShoppingListProvider({ children }) {
       }
     }
   }
-  console.log(savedShoppingList);
+
   const [groceryList, setGroceryList] = useState(savedShoppingList);
   const [checkedItems, setCheckedItems] = useState({});
 

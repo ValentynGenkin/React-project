@@ -35,7 +35,7 @@ function SingleRecipe() {
 
   const url = `https://api.spoonacular.com/recipes/${id}/information?includeNutrition=false&limitLicense=true`;
 
-  const [data] = useFetch(url);
+  const [data, error] = useFetch(url);
 
   const btnName =
     groceryList && data && Object.keys(groceryList).includes(data.title)
@@ -53,57 +53,64 @@ function SingleRecipe() {
       >
         Back
       </Button>
-      {data && (
-        <Button
-          className="back-button"
-          variant="outline-success"
-          onClick={() => {
-            saveToShoppingList(
-              data,
-              groceryList,
-              setGroceryList,
-              favorite,
-              setFavorite,
-            );
-          }}
-        >
-          {btnName}
-        </Button>
-      )}
-      {data ? (
-        <div key={data.id}>
-          <Title text={data.title} />
-          <Image src={data.image} thumbnail />
-          <p dangerouslySetInnerHTML={{ __html: data.summary }} />
-          {data.winePairing.pairingText && (
-            <div>
-              <p>{data.winePairing.pairingText}</p>
+
+      {error ? (
+        <div>{error}</div>
+      ) : (
+        <>
+          {data && (
+            <Button
+              className="back-button"
+              variant="outline-success"
+              onClick={() => {
+                saveToShoppingList(
+                  data,
+                  groceryList,
+                  setGroceryList,
+                  favorite,
+                  setFavorite,
+                );
+              }}
+            >
+              {btnName}
+            </Button>
+          )}
+          {data ? (
+            <div key={data.id}>
+              <Title text={data.title} />
+              <Image src={data.image} thumbnail />
+              <p dangerouslySetInnerHTML={{ __html: data.summary }} />
+              {data.winePairing.pairingText && (
+                <div>
+                  <p>{data.winePairing.pairingText}</p>
+                  <ul>
+                    {data.winePairing.pairedWines.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              <p>
+                Full recipe instruction:{' '}
+                <a href={data.sourceUrl} target={'_blank'} rel={'noreferrer'}>
+                  {data.creditsText}
+                </a>
+              </p>
+              <p className="h5">Ingredients:</p>
               <ul>
-                {data.winePairing.pairedWines.map((item) => (
-                  <li key={item}>{item}</li>
+                {data.extendedIngredients.map((item) => (
+                  <li key={item.id}>{`${item.name} - ${parseInt(
+                    item.measures.metric.amount,
+                  )} ${item.measures.metric.unitShort}`}</li>
                 ))}
               </ul>
+              <p className="h5">Preparation:</p>
+              <p dangerouslySetInnerHTML={{ __html: data.instructions }} />
             </div>
+          ) : (
+            <LoadingSpinner />
           )}
-          <p>
-            Full recipe instruction:{' '}
-            <a href={data.sourceUrl} target={'_blank'} rel={'noreferrer'}>
-              {data.creditsText}
-            </a>
-          </p>
-          <p className="h5">Ingredients:</p>
-          <ul>
-            {data.extendedIngredients.map((item) => (
-              <li key={item.id}>{`${item.name} - ${parseInt(
-                item.measures.metric.amount,
-              )} ${item.measures.metric.unitShort}`}</li>
-            ))}
-          </ul>
-          <p className="h5">Preparation:</p>
-          <p dangerouslySetInnerHTML={{ __html: data.instructions }} />
-        </div>
-      ) : (
-        <LoadingSpinner />
+        </>
       )}
     </Container>
   );

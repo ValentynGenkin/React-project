@@ -10,14 +10,18 @@ function useFetch(url) {
     const fetchData = async () => {
       try {
         const response = await fetch(`${url}&apiKey=${apiKey}`);
-        const data = await response.json();
+
         if (!response.ok) {
+          setError(`HTTP Error! Status: ${response.status}`);
           throw new Error(`HTTP Error! Status: ${response.status}`);
         }
+
+        const data = await response.json();
+
         setData(data);
         setError(null);
       } catch (error) {
-        setError(error);
+        console.error(error);
       }
     };
     fetchData();
