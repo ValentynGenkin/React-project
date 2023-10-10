@@ -1,0 +1,42 @@
+.shopping-list-container {
+  min-height: calc(100vh - 95px);
+}
+
+.title {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.title p {
+  background-color: lightgray;
+  width: 100%;
+  padding: 5px;
+}
+
+.items-list {
+  font-size: 1.2rem;
+  list-style-type: none;
+  padding: 0;
+}
+
+.item-list-img {
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+}
+
+.item {
+  max-width: 30rem;
+  display: flex;
+  justify-content: space-between;
+  margin: 3px;
+}
+
+.checked {
+  text-decoration: line-through;
+}
+
+.shopping-list-button {
+  margin: 20px 0;
+}

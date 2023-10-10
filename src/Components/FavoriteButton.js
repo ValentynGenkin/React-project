@@ -1,3 +1,5 @@
+import '../CSS/FavoriteButton.css';
+
 function FavoriteButton({ meal, saveFavorite, favorite, setFavorite }) {
   const isSelected = favorite.includes(meal.id);
 
@@ -11,6 +13,7 @@ function FavoriteButton({ meal, saveFavorite, favorite, setFavorite }) {
 
   return (
     <img
+      className="favorite-btn"
       src={favoriteImg}
       alt={'favorite-icon'}
       onClick={() => {

@@ -12,12 +12,13 @@ import { Link } from 'react-router-dom';
 import { useCurrentPage } from '../Context/CurrentPage';
 import { useState } from 'react';
 import { clearPosition } from '../JSFunction/clearPosition';
+import { useShoppingList } from '../Context/ShoppingListContext';
 
 function Navigation() {
   const { favorite } = useSelectFavorite();
   const { setCurrentPage } = useCurrentPage();
   const [searchInput, setSearchInput] = useState('');
-
+  const { groceryList } = useShoppingList();
   const handleInputChange = (e) => {
     const inputData = e.target.value;
     setSearchInput(inputData);
@@ -91,6 +92,16 @@ function Navigation() {
               {'Favorite '}
               <Badge bg="success" className="m-1">
                 {favorite.length}
+              </Badge>
+            </Nav.Link>
+            <Nav.Link
+              as={Link}
+              to="/shopping-list"
+              style={{ whiteSpace: 'nowrap' }}
+            >
+              {'Shopping list '}
+              <Badge bg="success" className="m-1">
+                {Object.keys(groceryList).length}
               </Badge>
             </Nav.Link>
           </Nav>

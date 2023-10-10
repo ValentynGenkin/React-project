@@ -6,6 +6,8 @@ import { useLocation } from 'react-router-dom';
 import { useCurrentPage } from '../Context/CurrentPage';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useShoppingList } from '../Context/ShoppingListContext';
+import { saveToShoppingList } from '../JSFunction/saveToShoppingList';
 
 import '../CSS/SingleRecipe.css';
 
@@ -19,6 +21,8 @@ function SingleRecipe() {
 
   const { setCurrentPage } = useCurrentPage();
 
+  const { groceryList, setGroceryList } = useShoppingList();
+
   useEffect(() => {
     setCurrentPage({
       page: parseInt(page),
@@ -31,6 +35,11 @@ function SingleRecipe() {
 
   const [data] = useFetch(url);
 
+  const btnName =
+    groceryList && data && Object.keys(groceryList).includes(data.title)
+      ? `Delete from Shopping List`
+      : ` Save to Shopping List`;
+
   return (
     <Container className="single-recipe-container">
       <Button
@@ -42,6 +51,17 @@ function SingleRecipe() {
       >
         Back
       </Button>
+      {data && (
+        <Button
+          className="back-button"
+          variant="outline-success"
+          onClick={() => {
+            saveToShoppingList(data, groceryList, setGroceryList);
+          }}
+        >
+          {btnName}
+        </Button>
+      )}
       {data ? (
         <div key={data.id}>
           <Title text={data.title} />
@@ -66,7 +86,9 @@ function SingleRecipe() {
           <p className="h5">Ingredients:</p>
           <ul>
             {data.extendedIngredients.map((item) => (
-              <li key={item.id}>{item.name}</li>
+              <li key={item.id}>{`${item.name} - ${parseInt(
+                item.measures.metric.amount,
+              )} ${item.measures.metric.unitShort}`}</li>
             ))}
           </ul>
           <p className="h5">Preparation:</p>
