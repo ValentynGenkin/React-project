@@ -3,6 +3,8 @@ import Navigation from './Navigation';
 import Footer from './Footer';
 import ScrollToTop from 'react-scroll-to-top';
 
+import '../CSS/ScrollToTop.css';
+
 function Layout() {
   return (
     <>
@@ -11,6 +13,7 @@ function Layout() {
       <Outlet />
 
       <ScrollToTop
+        className="scroll-btn"
         smooth
         component={<img src={'/assets/to-top.png'} alt="top" />}
       />
