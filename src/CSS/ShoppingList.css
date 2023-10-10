@@ -2,6 +2,10 @@
   min-height: calc(100vh - 95px);
 }
 
+.empty-list {
+  text-align: center;
+}
+
 .title {
   display: flex;
   flex-wrap: wrap;

@@ -2,7 +2,7 @@ import { Container } from 'react-bootstrap';
 import Pagination from 'react-bootstrap/Pagination';
 import '../CSS/Pagination.css';
 
-function PaginationComponent({ pages, currentPage, setCurrentPage }) {
+function PaginationComponent({ pages, currentPage, setCurrentPage, data }) {
   const totalPages = pages;
 
   const handlePageChange = (pageNumber) => {

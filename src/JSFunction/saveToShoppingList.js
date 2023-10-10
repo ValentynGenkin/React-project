@@ -1,4 +1,15 @@
-export const saveToShoppingList = (data, groceryList, setGroceryList) => {
+export const saveToShoppingList = (
+  data,
+  groceryList,
+  setGroceryList,
+  favorite,
+  setFavorite,
+) => {
+  if (favorite && !favorite.includes(data.id)) {
+    setFavorite([...favorite, data.id]);
+    localStorage.setItem(data.id, data.id);
+  }
+
   if (!Object.keys(groceryList).includes(data.title)) {
     setGroceryList({
       ...groceryList,

@@ -86,6 +86,7 @@ function RecipeList() {
                 pages={totalPages}
                 setCurrentPage={setCurrentPage}
                 currentPage={currentPage}
+                data={data}
               />
             ) : (
               ''

@@ -24,7 +24,9 @@ function ShoppingList() {
   return (
     <Container className="shopping-list-container">
       <Title text={'Shopping list'} />
-      {groceryList ? (
+      {Object.keys(groceryList).length === 0 ? (
+        <p className="empty-list h3">Shopping list empty</p>
+      ) : groceryList ? (
         Object.keys(groceryList).map((recipeKey) => {
           const recipe = groceryList[recipeKey];
           return (

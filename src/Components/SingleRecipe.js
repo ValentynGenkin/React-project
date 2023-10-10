@@ -10,6 +10,7 @@ import { useShoppingList } from '../Context/ShoppingListContext';
 import { saveToShoppingList } from '../JSFunction/saveToShoppingList';
 
 import '../CSS/SingleRecipe.css';
+import { useSelectFavorite } from '../Context/FavoriteRecipe';
 
 function SingleRecipe() {
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ function SingleRecipe() {
   const offset = searchParams.get('offset') ? searchParams.get('offset') : 0;
 
   const { setCurrentPage } = useCurrentPage();
+  const { favorite, setFavorite } = useSelectFavorite();
 
   const { groceryList, setGroceryList } = useShoppingList();
 
@@ -56,7 +58,13 @@ function SingleRecipe() {
           className="back-button"
           variant="outline-success"
           onClick={() => {
-            saveToShoppingList(data, groceryList, setGroceryList);
+            saveToShoppingList(
+              data,
+              groceryList,
+              setGroceryList,
+              favorite,
+              setFavorite,
+            );
           }}
         >
           {btnName}
